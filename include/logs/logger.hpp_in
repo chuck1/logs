@@ -1,0 +1,57 @@
+{% extends "CHeader.hpp" %}
+
+{% block header %}
+
+#include <logs/decl.hpp> // logs/stream.hpp_in
+#include <logs/stream.hpp> // logs/stream.hpp_in
+
+{% endblock %}
+
+{% block body %}
+
+/*
+enum mode {
+	COMPILE_TIME,
+	RUN_TIME
+};
+*/
+
+/**
+ * \param T the derived class
+ * \param MODE see enum logs::mode
+ * \param COMPILE_TIME_LEVEL int log level used with compile time mode
+ *
+ * For header templates, pbs2 defines log_mode and log_level which are defines as
+ * the include block define name followed by "_LOGGER_MODE" and "_LOGGER_LEVEL".
+ * If you use these template variables, you must define them before the header is read by the compiler.
+ * You can define them in the config.py file like this
+ *
+ *     l.l_defines.append('<include block define name>_LOGGER_MODE=logs::mode::COMPILE_TIME')
+ *     l.l_defines.append('<include block define name>_LOGGER_LEVEL=1')
+ */
+template<typename T, int MODE, int COMPILE_TIME_LEVEL>
+class logger
+{
+	public:
+		template<int LEVEL>
+		logs::stream<MODE, (LEVEL>=COMPILE_TIME_LEVEL)>		log() const
+		{
+			if(MODE == logs::mode::COMPILE_TIME)
+			{
+				return logs::stream<MODE, (LEVEL >= COMPILE_TIME_LEVEL)>(std::cout);
+			}
+			else if(MODE == logs::mode::RUN_TIME)
+			{
+				return logs::stream<MODE, (LEVEL >= COMPILE_TIME_LEVEL)>(std::cout, LEVEL >= _level_static);
+			}
+		}
+		
+		static int	_level_static;
+};
+
+template<typename T, int MODE, int COMPILE_TIME_LEVEL>
+int logger<T, MODE, COMPILE_TIME_LEVEL>::_level_static = COMPILE_TIME_LEVEL;
+
+{% endblock %}
+
+

@@ -1,0 +1,3 @@
+stream.o: /home/crymal/git/hvac/logs/source/logs/stream.cpp \
+ /home/crymal/git/hvac/logs/build/process/include/logs/stream.hpp \
+ /home/crymal/git/hvac/logs/build/process/include/logs/decl.hpp

@@ -1,0 +1,16 @@
+{% extends "CHeader.hpp" %}
+
+{% block header %}
+
+{% endblock %}
+
+{% block body %}
+
+enum mode {
+	COMPILE_TIME,
+	RUN_TIME
+};
+
+{% endblock %}
+
+
