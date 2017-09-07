@@ -43,7 +43,7 @@ class logger
 {
 	public:
 		template<int LEVEL>
-		logs::stream<MODE, (LEVEL>=COMPILE_TIME_LEVEL)>		log() const
+		static logs::stream<MODE, (LEVEL>=COMPILE_TIME_LEVEL)>		log()
 		{
 			//printf("MODE = %i LEVEL = %i level static = %i\n", MODE, LEVEL, _level_static);
 			if(MODE == logs::mode::COMPILE_TIME)
