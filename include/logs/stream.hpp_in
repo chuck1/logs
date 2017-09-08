@@ -1,16 +1,11 @@
 {% extends "CHeader.hpp" %}
-
 {% block header %}
-
 #include <iostream>
 #include <cstring>
 
 #include <logs/decl.hpp>
-
 {% endblock %}
-
 {% block body %}
-
 template<int MODE, bool ENABLED>
 class stream
 {
@@ -64,6 +59,26 @@ class stream
 			else if(MODE == logs::mode::RUN_TIME) {
 				if(_enabled) {
 					sprintf(buf, fmt, args...);
+					_ss.write(buf, strlen(buf));
+				}
+			}
+
+			return *this;
+		}
+		template<typename... Args>
+		stream&		printf(char const * fmt)
+		{
+			char buf[1000];
+
+			if(MODE == logs::mode::COMPILE_TIME) {
+				if(ENABLED) {
+					strcat(buf, fmt);
+					_ss.write(buf, strlen(buf));
+				}
+			}
+			else if(MODE == logs::mode::RUN_TIME) {
+				if(_enabled) {
+					strcat(buf, fmt);
 					_ss.write(buf, strlen(buf));
 				}
 			}

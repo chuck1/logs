@@ -8,16 +8,13 @@
 #define LOGS_STREAM_HPP_IN
 
 
-
 #include <iostream>
 #include <cstring>
 
 #include <logs/decl.hpp>
 
 
-
 namespace logs {
-
 
 
 template<int MODE, bool ENABLED>
@@ -79,6 +76,26 @@ class stream
 
 			return *this;
 		}
+		template<typename... Args>
+		stream&		printf(char const * fmt)
+		{
+			char buf[1000];
+
+			if(MODE == logs::mode::COMPILE_TIME) {
+				if(ENABLED) {
+					strcat(buf, fmt);
+					_ss.write(buf, strlen(buf));
+				}
+			}
+			else if(MODE == logs::mode::RUN_TIME) {
+				if(_enabled) {
+					strcat(buf, fmt);
+					_ss.write(buf, strlen(buf));
+				}
+			}
+
+			return *this;
+		}
 		std::ostream&		_ss;
 		bool			_enabled;
 };
@@ -86,5 +103,7 @@ class stream
 
 
 }
+
+
 
 #endif
