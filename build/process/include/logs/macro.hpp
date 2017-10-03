@@ -9,7 +9,7 @@
 
 namespace logs {
 
-#define LOG(l) LOGGER::log<l>() << __FUNCTION__
+#define LOG(logger, l) logger::log<l>() << __FUNCTION__
 #define LOG_FUNCTION(l) LOGGER::log<l>() << __PRETTY_FUNCTION__ << std::endl
 
 }
