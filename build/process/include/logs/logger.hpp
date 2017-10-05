@@ -8,14 +8,11 @@
 #define LOGS_LOGGER_HPP_IN
 
 
-
 #include <logs/decl.hpp> // logs/stream.hpp_in
 #include <logs/stream.hpp> // logs/stream.hpp_in
 
 
-
 namespace logs {
-
 
 
 /*
@@ -45,7 +42,6 @@ class logger
 		template<int LEVEL>
 		static logs::stream<MODE, (LEVEL>=COMPILE_TIME_LEVEL)>		log()
 		{
-			//printf("MODE = %i LEVEL = %i level static = %i\n", MODE, LEVEL, _level_static);
 			if(MODE == logs::mode::COMPILE_TIME)
 			{
 				return logs::stream<MODE, (LEVEL >= COMPILE_TIME_LEVEL)>(std::cout);
@@ -55,13 +51,24 @@ class logger
 				return logs::stream<MODE, (LEVEL >= COMPILE_TIME_LEVEL)>(std::cout, LEVEL >= _level_static);
 			}
 		}
+		template<int LEVEL>
+		static bool							should_log()
+		{
+			if(MODE == logs::mode::COMPILE_TIME)
+			{
+				return (LEVEL >= COMPILE_TIME_LEVEL);
+			}
+			else if(MODE == logs::mode::RUN_TIME)
+			{
+				return (LEVEL >= _level_static);
+			}
+		}
 		
 		static int	_level_static;
 };
 
 template<typename T, int MODE, int COMPILE_TIME_LEVEL>
 int logger<T, MODE, COMPILE_TIME_LEVEL>::_level_static = COMPILE_TIME_LEVEL;
-
 
 
 }
