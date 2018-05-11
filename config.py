@@ -1,6 +1,6 @@
-import pbs2
+import pbs
 
-l = pbs2.Library(self, 'logs', __file__)
+l = pbs.Library(self, 'logs', __file__)
 
 l.doc_out_dir = "/media/sf_P_DRIVE/html/logs"
 

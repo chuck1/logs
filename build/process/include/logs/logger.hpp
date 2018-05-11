@@ -27,7 +27,7 @@ enum mode {
  * \param MODE see enum logs::mode
  * \param COMPILE_TIME_LEVEL int log level used with compile time mode
  *
- * For header templates, pbs2 defines log_mode and log_level which are defines as
+ * For header templates, pbs defines log_mode and log_level which are defines as
  * the include block define name followed by "_LOGGER_MODE" and "_LOGGER_LEVEL".
  * If you use these template variables, you must define them before the header is read by the compiler.
  * You can define them in the config.py file like this
