@@ -2,7 +2,7 @@ import pbs
 
 l = pbs.Library(self, 'logs', __file__)
 
-l.doc_out_dir = "~/WindowsShare/html/logs"
+l.doc_out_dir = "/home/charles/WindowsShare/html/logs"
 
 self.parts.append(l)
 
